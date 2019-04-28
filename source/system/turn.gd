@@ -1,9 +1,38 @@
 extends Node2D
 
+var rabbits = []
+var turn_count = 0
+var turn = 0
 
-func _ready():
-	pass # Replace with function body.
+var is_on_clock_edge = false
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func connect_clock(clock):
+	if not clock.is_connected("tick", self, "_on_Clock_ticked"):
+		clock.connect("tick", self, "_on_Clock_ticked")
+		
+func disconnect_clock(clock):
+	if clock.is_connected("tick", self, "_on_Clock_ticked"):
+		clock.disconnect("tick", self, "_on_Clock_ticked")
+
+func _on_Clock_ticked():
+	is_on_clock_edge = true
+
+func _input(event):	
+	if event.is_action_pressed("ui_select"):
+		end_turn()
+
+func _on_Timer_timeout():
+	for rabbit in rabbits:
+		print(turn)
+		if rabbits.find(rabbit) == turn:
+			rabbit.is_my_turn = true			
+		else:
+			rabbit.is_my_turn = false			
+
+func end_turn():
+	turn += 1
+	if turn == rabbits.size():
+		turn = 0
+	rabbits[turn].can_get_bit = true
+	
+	is_on_clock_edge = false

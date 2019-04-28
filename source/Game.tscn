@@ -20,8 +20,11 @@ current = true
 [node name="Turn" parent="InBattle" instance=ExtResource( 3 )]
 
 [node name="PowerSource" parent="InBattle" instance=ExtResource( 4 )]
-position = Vector2( 105.485, 90.0018 )
+position = Vector2( 947.288, 513.062 )
 
 [node name="Rabbit" parent="InBattle" instance=ExtResource( 5 )]
-position = Vector2( 1571.44, 599.628 )
+position = Vector2( 436.085, 666.54 )
+
+[node name="Rabbit2" parent="InBattle" instance=ExtResource( 5 )]
+position = Vector2( 1510.93, 382.049 )
 

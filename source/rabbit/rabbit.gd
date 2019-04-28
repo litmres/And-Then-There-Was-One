@@ -10,6 +10,8 @@ var PressedSpr = preload("res://rabbit/sprites/pressed.PNG")
 
 var is_enemy = false
 var is_my_turn = false
+var is_alive = true
+var can_get_bit = true
 
 var j = 0
 var k = 0
@@ -17,6 +19,7 @@ var pre_bar = 1
 var clr_bar = 1
 var q = 1
 
+onready var Turn = get_parent().get_node("Turn")
 onready var Clock = get_parent().get_parent().get_node("Clock")
 onready var PowerSource = get_parent().get_node("PowerSource")
 
@@ -31,10 +34,35 @@ onready var display_sprite = $body/display/bit
 onready var J_position = $body/head/earl/J.global_position
 onready var K_position = $body/head/earr/K.global_position
 
+func reset():
+	_ready()
+	
+	is_enemy = false
+	is_my_turn = false
+	is_alive = true
+
+	j = 0
+	k = 0
+	pre_bar = 1
+	clr_bar = 1
+	q = 1
+
 func _ready():
 	connect_clock(Clock)
 	connect_source(PowerSource)
 	display_sprite.texture = BitsSpr[q]
+	
+	Turn.rabbits.append(self)
+	$aliveAnim.playback_speed = rand_range(0.08, 0.15)
+
+func _process(delta):
+	if is_alive and is_my_turn:
+		if not $turnAnim.is_playing():			
+			$turnAnim.play("modulate")
+		$body/turnarrow.show()
+	else:
+		$turnAnim.stop()
+		$body/turnarrow.hide()
 
 func connect_clock(clock):
 	if not clock.is_connected("tick", self, "_on_Clock_ticked"):
@@ -45,15 +73,28 @@ func disconnect_clock(clock):
 		clock.disconnect("tick", self, "_on_Clock_ticked")
 
 func _on_Clock_ticked():
-	tick()	
+	tick()
 	
-func tick():	
+func tick():
 	randomize()
-	if rand_range(0, 1) > 0.5:		
-		emit_signal("bit_requested", J_position) # ASK FOR A BIT
-	else: 
-		emit_signal("bit_requested", K_position) # ASK FOR A BIT
-	
+	if is_alive:
+		$tickAnim.play("tick")
+		
+		if is_my_turn and can_get_bit:
+			if rand_range(0, 1) > 0.5:		
+				emit_signal("bit_requested", J_position)
+			else: 
+				emit_signal("bit_requested", K_position)
+			can_get_bit = false
+		else:			
+			$aliveAnim.playback_speed = rand_range(0.08, 0.15)
+			$aliveAnim.stop()
+			$aliveAnim.play("alive")
+	else:
+		$aliveAnim.stop()
+		$deadAnim.play("dead")
+		disconnect_clock(Clock)
+		
 	if j == 1 and k == 1:
 		if q == 0:
 			set_q(1)
@@ -72,16 +113,23 @@ func disconnect_source(source):
 	if is_connected("bit_requested", source, "_on_bit_requested"):
 		disconnect("bit_requested", source, "_on_bit_requested")
 
-func receive_source(bit):
-	pass
-	
+func receive_jk(bit):
+	if is_alive and is_my_turn:
+		$aliveAnim.playback_speed = rand_range(0.2, 1)
+		$aliveAnim.stop()
+		$aliveAnim.play("alive")
+
 func receive_j(bit):
+	receive_jk(bit)
 	j = bit
 	J_sprite.texture = BitsSpr[bit]
+	$sourceAnim.play("bit")	
 	
 func receive_k(bit):
+	receive_jk(bit)
 	k = bit
 	K_sprite.texture = BitsSpr[bit]
+	$sourceAnim.play("bit")	
 	
 func receive_pre_bar(bit):
 	pre_bar = bit
