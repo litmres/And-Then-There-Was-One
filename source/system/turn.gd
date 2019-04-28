@@ -35,6 +35,7 @@ func end_turn():
 		for rabbit in rabbits:
 			rabbit.has_j = false
 			rabbit.has_k = false
+			rabbit.can_get_bit = false
 		turn = 0
 	rabbits[turn].can_get_bit = true
 	

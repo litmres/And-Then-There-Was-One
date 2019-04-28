@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://rabbit/rabbit.gd" type="Script" id=1]
 [ext_resource path="res://rabbit/sprites/body.PNG" type="Texture" id=2]
@@ -12,11 +12,12 @@
 [ext_resource path="res://rabbit/sprites/tail.PNG" type="Texture" id=10]
 [ext_resource path="res://rabbit/sprites/arm.l.PNG" type="Texture" id=11]
 [ext_resource path="res://rabbit/sprites/arm.r.PNG" type="Texture" id=12]
-[ext_resource path="res://rabbit/sprites/display.PNG" type="Texture" id=13]
-[ext_resource path="res://rabbit/sprites/PRE.PNG" type="Texture" id=14]
-[ext_resource path="res://rabbit/sprites/CLR.PNG" type="Texture" id=15]
-[ext_resource path="res://rabbit/sprites/depressed.PNG" type="Texture" id=16]
-[ext_resource path="res://rabbit/sprites/turnarrow.PNG" type="Texture" id=17]
+[ext_resource path="res://weapons/sprites/stick.PNG" type="Texture" id=13]
+[ext_resource path="res://rabbit/sprites/display.PNG" type="Texture" id=14]
+[ext_resource path="res://rabbit/sprites/PRE.PNG" type="Texture" id=15]
+[ext_resource path="res://rabbit/sprites/CLR.PNG" type="Texture" id=16]
+[ext_resource path="res://rabbit/sprites/depressed.PNG" type="Texture" id=17]
+[ext_resource path="res://rabbit/sprites/turnarrow.PNG" type="Texture" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 34.7814, 86.1664 )
@@ -340,7 +341,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.8, 1 ),
 "transitions": PoolRealArray( 1, 34.2967, 1 ),
 "update": 1,
-"values": [ Color( 0.854902, 1, 0.0117647, 1 ), Color( 0.976471, 0.678431, 0.52549, 1 ), Color( 0.854902, 1, 0.0117647, 1 ) ]
+"values": [ Color( 0.854902, 1, 0.0117647, 1 ), Color( 0.968627, 0.647059, 0.0980392, 1 ), Color( 0.854902, 1, 0.0117647, 1 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("body:position")
@@ -626,10 +627,13 @@ tracks/18/keys = {
 script = ExtResource( 1 )
 
 [node name="body" type="Sprite" parent="."]
+editor/display_folded = true
+modulate = Color( 0.854902, 1, 0.0117647, 1 )
 position = Vector2( -4.02148, 126.512 )
 texture = ExtResource( 2 )
 
 [node name="head" type="Sprite" parent="body"]
+editor/display_folded = true
 position = Vector2( 0.830444, -213.513 )
 texture = ExtResource( 3 )
 
@@ -653,7 +657,7 @@ position = Vector2( -0.663937, 19.8212 )
 shape = SubResource( 1 )
 
 [node name="J2" type="Sprite" parent="body/head/earl"]
-position = Vector2( -64.7016, -172.838 )
+position = Vector2( -8.95917, -31.2068 )
 rotation = -0.400913
 
 [node name="earr" type="Sprite" parent="body/head"]
@@ -676,7 +680,7 @@ position = Vector2( -3.6778, 23.4972 )
 shape = SubResource( 1 )
 
 [node name="K2" type="Sprite" parent="body/head/earr"]
-position = Vector2( 76.2137, -174.839 )
+position = Vector2( 18.1961, -29.2262 )
 rotation = 0.337065
 
 [node name="legl" type="Sprite" parent="body"]
@@ -708,39 +712,45 @@ position = Vector2( 92.1855, -0.344017 )
 texture = ExtResource( 12 )
 offset = Vector2( 32.9548, -93.7506 )
 
+[node name="weapon" type="Sprite" parent="body/armr"]
+show_behind_parent = true
+position = Vector2( 93.8205, -88.9302 )
+rotation = -0.404207
+texture = ExtResource( 13 )
+offset = Vector2( 1.14182, -211.03 )
+
 [node name="display" type="Sprite" parent="body"]
 editor/display_folded = true
 position = Vector2( 3.12238, -38.0177 )
-texture = ExtResource( 13 )
+texture = ExtResource( 14 )
 
 [node name="bit" type="Sprite" parent="body/display"]
 
 [node name="PRE" type="Sprite" parent="body"]
 position = Vector2( -83.6107, 55.4298 )
-texture = ExtResource( 14 )
+texture = ExtResource( 15 )
 
 [node name="CLR" type="Sprite" parent="body"]
 position = Vector2( 92.8679, 54.6682 )
-texture = ExtResource( 15 )
+texture = ExtResource( 16 )
 
 [node name="PRE_button" type="Sprite" parent="body"]
 position = Vector2( -83.2627, 94.3984 )
-texture = ExtResource( 16 )
+texture = ExtResource( 17 )
 
 [node name="CLR_button" type="Sprite" parent="body"]
 position = Vector2( 93.5825, 95.1443 )
-texture = ExtResource( 16 )
+texture = ExtResource( 17 )
 flip_h = true
 
 [node name="turnarrow" type="Sprite" parent="body"]
 position = Vector2( -287.1, -334.274 )
 rotation = -0.853299
 scale = Vector2( 1.02123, 1.09956 )
-texture = ExtResource( 17 )
+texture = ExtResource( 18 )
 
 [node name="aliveAnim" type="AnimationPlayer" parent="."]
 autoplay = "alive"
-playback_speed = 0.5
 anims/alive = SubResource( 3 )
 
 [node name="tickAnim" type="AnimationPlayer" parent="."]
@@ -750,9 +760,11 @@ anims/tick = SubResource( 2 )
 anims/bit = SubResource( 4 )
 
 [node name="turnAnim" type="AnimationPlayer" parent="."]
+playback_speed = 1.5
 anims/modulate = SubResource( 5 )
 
 [node name="turnEnemyAnim" type="AnimationPlayer" parent="."]
+playback_speed = 1.5
 anims/modulate = SubResource( 7 )
 
 [node name="deadAnim" type="AnimationPlayer" parent="."]

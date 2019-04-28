@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://rabbit/sprites/J.PNG" type="Texture" id=1]
+[ext_resource path="res://rabbit/sprites/K.PNG" type="Texture" id=2]
+[ext_resource path="res://system/sprites/Z.PNG" type="Texture" id=3]
+
+[node name="BattleUI" type="Panel"]
+rect_min_size = Vector2( 200, 0 )
+
+[node name="JKZ" type="ScrollContainer" parent="."]
+editor/display_folded = true
+margin_left = 44.231
+margin_right = 144.231
+margin_bottom = 112.0
+rect_min_size = Vector2( 100, 100 )
+size_flags_horizontal = 13
+size_flags_vertical = 13
+scroll_vertical_enabled = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="JKZ"]
+editor/display_folded = true
+margin_right = 308.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+size_flags_horizontal = 15
+size_flags_vertical = 15
+alignment = 1
+
+[node name="J" type="TextureRect" parent="JKZ/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+size_flags_horizontal = 15
+size_flags_vertical = 15
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+
+[node name="K" type="TextureRect" parent="JKZ/HBoxContainer"]
+margin_left = 104.0
+margin_right = 204.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+size_flags_horizontal = 15
+size_flags_vertical = 15
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 6
+
+[node name="Z" type="TextureRect" parent="JKZ/HBoxContainer"]
+margin_left = 208.0
+margin_right = 308.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+size_flags_horizontal = 15
+size_flags_vertical = 15
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+

@@ -4,6 +4,8 @@ signal bit_requested(j)
 
 var BitsSpr = [preload("res://bit/sprites/0.PNG"),
 				preload("res://bit/sprites/1.PNG")]
+				
+var CrosshairSpr = preload("res://system/sprites/crosshair.PNG")
 
 var DepressedSpr = preload("res://rabbit/sprites/depressed.PNG")
 var PressedSpr = preload("res://rabbit/sprites/pressed.PNG")
@@ -71,19 +73,19 @@ func _ready():
 	display_sprite.texture = BitsSpr[q]
 	
 	Turn.rabbits.append(self)
-	$aliveAnim.playback_speed = rand_range(0.08, 0.15)
+	$aliveAnim.playback_speed = rand_range(0.08, 0.1)
 
 func _process(delta):
+	if not has_j:
+		J_sprite.texture = null
+	if not has_k:
+		K_sprite.texture = null	
 	if is_alive:
 		if is_my_turn:
 			if not turnAnim.is_playing():			
 				turnAnim.play("modulate")
 			$body/turnarrow.show()
 		else:		
-			if not has_j:
-				J_sprite.texture = null
-			if not has_k:
-				K_sprite.texture = null	
 			turnAnim.stop()
 			$body.modulate = Color(color)
 			$body/turnarrow.hide()
@@ -112,8 +114,8 @@ func tick():
 			else: 
 				emit_signal("bit_requested", K_position)
 			can_get_bit = false
-		else:			
-			$aliveAnim.playback_speed = rand_range(0.08, 0.15)
+		elif not is_my_turn:			
+			$aliveAnim.playback_speed = rand_range(0.08, 0.5)
 			$aliveAnim.stop()
 			$aliveAnim.play("alive")
 	else:
@@ -149,7 +151,7 @@ func disconnect_source(source):
 
 func receive_jk(bit):
 	if is_alive and is_my_turn:
-		$aliveAnim.playback_speed = rand_range(0.2, 1)
+		$aliveAnim.playback_speed = rand_range(0.2, 0.7)
 		$aliveAnim.stop()
 		$aliveAnim.play("alive")
 
