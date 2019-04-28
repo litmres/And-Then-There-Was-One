@@ -10,11 +10,16 @@ func _ready():
 	set_mode(0)
 
 func set_mode(bit):
-	mode = bit
+	mode = bit	
 	if bit != 0:
 		mode = 1
+		$Sprite/SwitchSprite.position.y = -28.629
+	else:
+		$Sprite/SwitchSprite.position.y = 29.829
 
 func _on_bit_requested(j):
+	$bitAnim.play("bit")
+	
 	randomize()
 	
 	if rand_range(0, 1) > 0.5:

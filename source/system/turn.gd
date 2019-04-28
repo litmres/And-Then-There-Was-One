@@ -25,13 +25,16 @@ func _on_Timer_timeout():
 	for rabbit in rabbits:
 		print(turn)
 		if rabbits.find(rabbit) == turn:
-			rabbit.is_my_turn = true			
+			rabbit.is_my_turn = true		
 		else:
 			rabbit.is_my_turn = false			
 
 func end_turn():
 	turn += 1
 	if turn == rabbits.size():
+		for rabbit in rabbits:
+			rabbit.has_j = false
+			rabbit.has_k = false
 		turn = 0
 	rabbits[turn].can_get_bit = true
 	

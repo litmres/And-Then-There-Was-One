@@ -27,4 +27,5 @@ position = Vector2( 436.085, 666.54 )
 
 [node name="Rabbit2" parent="InBattle" instance=ExtResource( 5 )]
 position = Vector2( 1510.93, 382.049 )
+is_enemy = true
 

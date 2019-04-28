@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://system/powersource.gd" type="Script" id=1]
 [ext_resource path="res://system/sprites/switch.PNG" type="Texture" id=2]
@@ -7,6 +7,34 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 68.3002, 68.1308 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "bit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -3.0709, 5.08477, 0.0 ]
+}
 
 [node name="PowerSource" type="Area2D"]
 script = ExtResource( 1 )
@@ -23,4 +51,7 @@ texture = ExtResource( 3 )
 [node name="SwitchSprite" type="Sprite" parent="Sprite"]
 position = Vector2( 0.863892, 29.8288 )
 texture = ExtResource( 4 )
+
+[node name="bitAnim" type="AnimationPlayer" parent="."]
+anims/bit = SubResource( 2 )
 
