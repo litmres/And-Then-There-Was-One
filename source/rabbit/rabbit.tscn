@@ -627,17 +627,14 @@ tracks/18/keys = {
 script = ExtResource( 1 )
 
 [node name="body" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( -4.02148, 126.512 )
 texture = ExtResource( 2 )
 
 [node name="head" type="Sprite" parent="body"]
-editor/display_folded = true
 position = Vector2( 0.830444, -213.513 )
 texture = ExtResource( 3 )
 
 [node name="earl" type="Sprite" parent="body/head"]
-editor/display_folded = true
 position = Vector2( -67.8574, -80.1738 )
 texture = ExtResource( 4 )
 offset = Vector2( -27.7567, -60.1466 )
@@ -660,7 +657,6 @@ position = Vector2( -8.95917, -31.2068 )
 rotation = -0.400913
 
 [node name="earr" type="Sprite" parent="body/head"]
-editor/display_folded = true
 position = Vector2( 67.6079, -83.6033 )
 texture = ExtResource( 6 )
 offset = Vector2( 31.9632, -60.1466 )

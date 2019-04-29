@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://system/sprites/crosshair.PNG" type="Texture" id=1]
+
+[node name="Crosshair" type="Sprite"]
+z_index = 50
+texture = ExtResource( 1 )
+
