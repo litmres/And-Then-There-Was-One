@@ -20,10 +20,6 @@ func disconnect_clock(clock):
 func _on_Clock_ticked():
 	pass
 
-func _unhandled_input(event):	
-	if event.is_action_pressed("ui_page_down"):
-		end_turn("")
-
 func _on_Timer_timeout():	
 	for rabbit in rabbits:		
 		if rabbits.find(rabbit) == turn:

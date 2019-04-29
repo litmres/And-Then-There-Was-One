@@ -7,7 +7,7 @@ var BitScn = preload("res://bit/bit.tscn")
 
 var BitPowerScn = preload("res://system/bitpower.tscn")
 
-var bit_count = 8
+var bit_count = 2
 var mode = 0
 
 var target_positions = []
@@ -41,6 +41,9 @@ func set_mode(bit):
 		$Sprite/SwitchSprite.position.y = 29.829
 
 func _on_bit_requested(target):
+	$RestTo1Timer.stop()
+	$RestTo1Timer.start()
+	
 	if bit_count > 0:
 		$bitAnim.play("bit")
 		

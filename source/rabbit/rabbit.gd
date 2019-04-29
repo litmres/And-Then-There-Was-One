@@ -160,11 +160,13 @@ func _process(delta):
 		$body/turnarrow.hide()
 
 func _unhandled_input(event):	
-	if is_my_turn and not is_enemy and Crosshair.visible:
+	if is_my_turn and not is_enemy:
 		if event.is_action_pressed("ui_left"):
 			press_pre_bar()
 		elif event.is_action_pressed("ui_right"):
 			press_clr_bar()		
+			
+	if is_my_turn and not is_enemy and Crosshair.visible:		
 		if event.is_action_pressed("ui_down"):			
 			if current_attack_target_index > 0:
 				current_attack_target_index -= 1
@@ -289,10 +291,11 @@ func receive_jk(bit):
 	if is_alive and is_my_turn:
 		$aliveAnim.playback_speed = rand_range(0.5, 1.0)
 		$aliveAnim.stop()
-		$aliveAnim.play("alive")	
-	foe.Crosshair.show()
-	if foe.is_enemy:
-		foe.Crosshair.modulate = Color("66ff07")
+		$aliveAnim.play("alive")
+	if foe != null:
+		foe.Crosshair.show()
+		if foe.is_enemy:
+			foe.Crosshair.modulate = Color("66ff07")
 	yield(Clock, "tick")
 
 func receive_pre_clr(bit):
@@ -302,13 +305,20 @@ func receive_pre_clr(bit):
 		
 	elif battery_bits > 0:
 		consume_battery()
-		if pre_bar == 0 and clr_bar == 1:
-			set_q(1)
-		if pre_bar == 1 and clr_bar == 0:
-			set_q(0)
+		if pre_bar == 0 and clr_bar == 1:			
+			receive_j(1)
+			receive_k(0)
+		if pre_bar == 1 and clr_bar == 0:			
+			receive_j(0)
+			receive_k(1)
+		has_j = true
+		has_k = true
 		
-	print("PRE: " + str(pre_bar) + "; CLR: " + str(clr_bar))	
-
+	can_get_bit = true
+	is_my_turn = true
+					
+	compute_flipflop()	
+		
 func press_pre_bar():	
 	if pre_bar == 1:
 		receive_pre_bar(0)
@@ -359,6 +369,8 @@ func _on_K_area_entered(area):
 
 func _on_AITimer_timeout():
 	if is_enemy and Crosshair.visible:
+		if q == 0 and rand_range(0, 100) > 20:
+			press_pre_bar()
 		if current_attack_target_index < attack_targets.size():
 			shoot(attack_targets[current_attack_target_index])
 			Crosshair.hide()
