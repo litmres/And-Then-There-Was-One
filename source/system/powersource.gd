@@ -55,7 +55,7 @@ func _on_bit_requested(target):
 		var bit = BitScn.instance()
 		get_parent().add_child(bit)
 		bit.global_position = Vector2(target.x, 
-								  target.y - 300)
+								  target.y - 20)
 		bit.set_bit(mode)
 		bit.target = target
 		
@@ -92,6 +92,9 @@ func _on_bit_requested(target):
 		
 		Rabbit.Turn.disconnect_clock(Rabbit.Clock)
 		RabbitEnemy.Turn.disconnect_clock(RabbitEnemy.Clock)
+		
+		if RabbitEnemy.battery_bits <= 0:
+			get_parent().game_over_won()
 		
 		if Rabbit.battery_bits > 0:
 			if Rabbit.q == RabbitEnemy.q:

@@ -1262,6 +1262,7 @@ wait_time = 3.0
 autostart = true
 
 [node name="AISelectTargetTimer" type="Timer" parent="."]
+process_mode = 0
 autostart = true
 
 [node name="RestorePRECLRTimer" type="Timer" parent="."]

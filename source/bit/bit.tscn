@@ -4,7 +4,7 @@
 [ext_resource path="res://bit/sprites/0.PNG" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 16.9699, 25.2886 )
+extents = Vector2( 9.81826, 13.3156 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "New Anim"

@@ -190,42 +190,43 @@ func _process(delta):
 		$body/turnarrow.hide()
 
 func _unhandled_input(event):	
-	if event.is_action_released("ui_select"):	
-		spacebar.modulate = Color("ffffff")
-	if event.is_action_pressed("ui_select"):
-		spacebar.modulate = Color("610054")
-	if not is_game_over and get_parent().get_parent().has_game_started:
-		if event.is_action_released("ui_left"):
-			arrow_left.modulate = Color("ffffff")
-		if event.is_action_released("ui_right"):
-			arrow_right.modulate = Color("ffffff")
-		if event.is_action_released("ui_up"):	
-			arrow_up.modulate = Color("ffffff")
-		if event.is_action_released("ui_down"):	
-			arrow_down.modulate = Color("ffffff")			
-		if is_my_turn and not is_enemy:
-			if event.is_action_pressed("ui_left"):
-				press_pre_bar()
-				arrow_left.modulate = Color("610054")
-			elif event.is_action_pressed("ui_right"):
-				press_clr_bar()
-				arrow_right.modulate = Color("610054")
-				
-		if is_my_turn and not is_enemy and Crosshair.visible:		
-			if event.is_action_pressed("ui_down"):			
-				arrow_down.modulate = Color("610054")
-				if current_attack_target_index > 0:
-					current_attack_target_index -= 1
-			if event.is_action_pressed("ui_up"):			
-				arrow_up.modulate = Color("610054")
-				if current_attack_target_index < attack_targets.size() - 1:
-					current_attack_target_index += 1
-				
-			if event.is_action_pressed("ui_select"):
-				spacebar.modulate = Color("610054")
-				if current_attack_target_index < attack_targets.size():
-					shoot(attack_targets[current_attack_target_index])
-					Crosshair.hide()
+	if not is_enemy:
+		if event.is_action_released("ui_select"):	
+			spacebar.modulate = Color("ffffff")
+		if event.is_action_pressed("ui_select"):
+			spacebar.modulate = Color("610054")
+		if not is_game_over and get_parent().get_parent().has_game_started:
+			if event.is_action_released("ui_left"):
+				arrow_left.modulate = Color("ffffff")
+			if event.is_action_released("ui_right"):
+				arrow_right.modulate = Color("ffffff")
+			if event.is_action_released("ui_up"):	
+				arrow_up.modulate = Color("ffffff")
+			if event.is_action_released("ui_down"):	
+				arrow_down.modulate = Color("ffffff")			
+			if is_my_turn and not is_enemy:
+				if event.is_action_pressed("ui_left"):
+					press_pre_bar()
+					arrow_left.modulate = Color("610054")
+				elif event.is_action_pressed("ui_right"):
+					press_clr_bar()
+					arrow_right.modulate = Color("610054")
+					
+			if is_my_turn and not is_enemy and Crosshair.visible:		
+				if event.is_action_pressed("ui_down"):			
+					arrow_down.modulate = Color("610054")
+					if current_attack_target_index > 0:
+						current_attack_target_index -= 1
+				if event.is_action_pressed("ui_up"):			
+					arrow_up.modulate = Color("610054")
+					if current_attack_target_index < attack_targets.size() - 1:
+						current_attack_target_index += 1
+					
+				if event.is_action_pressed("ui_select"):
+					spacebar.modulate = Color("610054")
+					if current_attack_target_index < attack_targets.size():
+						shoot(attack_targets[current_attack_target_index])
+						Crosshair.hide()
 			
 		
 func shoot(target):	

@@ -96,6 +96,7 @@ color = Color( 0.113725, 0.00784314, 0.0901961, 1 )
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Logo" type="Sprite" parent="UI"]
+editor/display_folded = true
 position = Vector2( 1001.82, 483.089 )
 scale = Vector2( 0.765095, 0.765095 )
 texture = ExtResource( 2 )

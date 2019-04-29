@@ -132,7 +132,7 @@ anims/idle = SubResource( 3 )
 
 [node name="RestTo1Timer" type="Timer" parent="."]
 process_mode = 0
-wait_time = 7.0
+wait_time = 15.0
 autostart = true
 
 [connection signal="area_entered" from="." to="." method="_on_PowerSource_area_entered"]
