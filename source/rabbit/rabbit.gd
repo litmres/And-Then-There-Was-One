@@ -106,14 +106,25 @@ func _process(delta):
 				turnAnim.play("modulate")
 			$body/turnarrow.show()
 			
-			if attack_targets.size() > current_attack_target_index + 1:
-				Crosshair.global_position = attack_targets[current_attack_target_index + 1]				
+			if attack_targets.size() > current_attack_target_index:
+				Crosshair.global_position = attack_targets[current_attack_target_index]
 		else:		
 			turnAnim.stop()
 			$body.modulate = Color(color)
 			$body/turnarrow.hide()
 	else:
 		$body/turnarrow.hide()
+
+func _unhandled_input(event):
+	if is_my_turn and not is_enemy:
+		if event.is_action_pressed("ui_left"):
+			print(current_attack_target_index)
+			if current_attack_target_index > 0:
+				current_attack_target_index -= 1
+		if event.is_action_pressed("ui_right"):
+			print(current_attack_target_index)
+			if current_attack_target_index < attack_targets.size() - 1:
+				current_attack_target_index += 1
 
 func connect_clock(clock):
 	if not clock.is_connected("tick", self, "_on_Clock_ticked"):
@@ -157,10 +168,10 @@ func get_foe_targets():
 	if foe != null:
 		var targets = []
 		if not foe.has_j:
-			targets.push_front(foe.J_position)
+			targets.append(foe.J_position)
 		if not foe.has_k:
-			targets.push_front(foe.K_position)
-		targets.push_front(PowerSource.global_position)	
+			targets.append(foe.K_position)
+		targets.append(PowerSource.global_position)	
 		attack_targets = targets		
 
 func dead():
