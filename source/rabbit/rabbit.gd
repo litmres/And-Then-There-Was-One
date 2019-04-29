@@ -147,6 +147,7 @@ func shoot(target):
 	get_parent().add_child(spark)
 	spark.global_position = weapon.global_position - Vector2(-20, 400)
 	spark.target = target
+	spark.Bit.texture = BitsSpr[q]
 	
 	var spark2 = SparkScn.instance()
 #	spark2.speed = spark.speed - 200
@@ -249,8 +250,10 @@ func receive_jk(bit):
 		$aliveAnim.playback_speed = rand_range(0.5, 1.0)
 		$aliveAnim.stop()
 		$aliveAnim.play("alive")	
-	yield(Clock, "tick")
 	foe.Crosshair.show()
+	if foe.is_enemy:
+		foe.Crosshair.modulate = Color("66ff07")
+	yield(Clock, "tick")
 
 func receive_pre_clr(bit):
 	if pre_bar == 0 and clr_bar == 1:

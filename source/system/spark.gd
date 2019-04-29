@@ -5,6 +5,7 @@ var target = Vector2()
 var done_moving = false
 
 onready var Sprite = $Sprite
+onready var Bit = $Bit
 
 func _ready():
 	speed = rand_range(speed, speed + 500)

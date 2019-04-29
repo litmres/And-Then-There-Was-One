@@ -6,7 +6,7 @@
 [ext_resource path="res://system/sprites/switchbutton.PNG" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 68.3002, 68.1308 )
+extents = Vector2( 54.2122, 53.4105 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "bit"
@@ -102,14 +102,22 @@ tracks/2/keys = {
 }
 
 [node name="PowerSource" type="Area2D"]
+collision_layer = 65
+collision_mask = 65
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 editor/display_folded = true
 texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Sprite2" type="Sprite" parent="Sprite"]
 texture = ExtResource( 3 )

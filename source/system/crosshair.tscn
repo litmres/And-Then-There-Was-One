@@ -31,8 +31,6 @@ tracks/1/keys = {
 }
 
 [node name="Crosshair" type="Sprite"]
-rotation = 0.534816
-scale = Vector2( 1.09522, 1.19169 )
 z_index = 50
 texture = ExtResource( 1 )
 
