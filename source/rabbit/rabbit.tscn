@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://rabbit/rabbit.gd" type="Script" id=1]
 [ext_resource path="res://rabbit/sprites/body.PNG" type="Texture" id=2]
@@ -13,12 +13,15 @@
 [ext_resource path="res://rabbit/sprites/arm.l.PNG" type="Texture" id=11]
 [ext_resource path="res://rabbit/sprites/arm.r.PNG" type="Texture" id=12]
 [ext_resource path="res://weapons/sprites/stick.PNG" type="Texture" id=13]
-[ext_resource path="res://rabbit/sprites/display.PNG" type="Texture" id=14]
-[ext_resource path="res://bit/sprites/0.PNG" type="Texture" id=15]
-[ext_resource path="res://rabbit/sprites/PRE.PNG" type="Texture" id=16]
-[ext_resource path="res://rabbit/sprites/CLR.PNG" type="Texture" id=17]
-[ext_resource path="res://rabbit/sprites/depressed.PNG" type="Texture" id=18]
-[ext_resource path="res://rabbit/sprites/turnarrow.PNG" type="Texture" id=19]
+[ext_resource path="res://battery/sprites/battery.PNG" type="Texture" id=14]
+[ext_resource path="res://battery/sprites/battery_bg.PNG" type="Texture" id=15]
+[ext_resource path="res://battery/sprites/battery_level.PNG" type="Texture" id=16]
+[ext_resource path="res://rabbit/sprites/display.PNG" type="Texture" id=17]
+[ext_resource path="res://bit/sprites/0.PNG" type="Texture" id=18]
+[ext_resource path="res://rabbit/sprites/depressed.PNG" type="Texture" id=19]
+[ext_resource path="res://rabbit/sprites/PRE.PNG" type="Texture" id=20]
+[ext_resource path="res://rabbit/sprites/CLR.PNG" type="Texture" id=21]
+[ext_resource path="res://rabbit/sprites/turnarrow.PNG" type="Texture" id=22]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 34.7814, 86.1664 )
@@ -1143,36 +1146,86 @@ rotation = -0.404207
 texture = ExtResource( 13 )
 offset = Vector2( 1.14182, -211.03 )
 
+[node name="battery" type="Sprite" parent="body"]
+editor/display_folded = true
+position = Vector2( 2.86593, 38.8349 )
+texture = ExtResource( 14 )
+
+[node name="red" type="Sprite" parent="body/battery"]
+show_behind_parent = true
+position = Vector2( 0.554779, 9.15384 )
+texture = ExtResource( 15 )
+
+[node name="level1" type="Sprite" parent="body/battery"]
+show_behind_parent = true
+position = Vector2( 2.89873, 35.8387 )
+texture = ExtResource( 16 )
+
+[node name="level2" type="Sprite" parent="body/battery"]
+show_behind_parent = true
+position = Vector2( 3.16225, 28.1967 )
+texture = ExtResource( 16 )
+
+[node name="level3" type="Sprite" parent="body/battery"]
+show_behind_parent = true
+position = Vector2( 2.89873, 20.8181 )
+texture = ExtResource( 16 )
+
+[node name="level4" type="Sprite" parent="body/battery"]
+show_behind_parent = true
+position = Vector2( 1.84465, 13.4395 )
+texture = ExtResource( 16 )
+
+[node name="level5" type="Sprite" parent="body/battery"]
+show_behind_parent = true
+position = Vector2( 0.527054, 6.06096 )
+texture = ExtResource( 16 )
+
+[node name="level6" type="Sprite" parent="body/battery"]
+show_behind_parent = true
+position = Vector2( 1.52588e-05, -1.58113 )
+texture = ExtResource( 16 )
+
+[node name="level7" type="Sprite" parent="body/battery"]
+show_behind_parent = true
+position = Vector2( 1.52588e-05, -9.22321 )
+texture = ExtResource( 16 )
+
+[node name="level8" type="Sprite" parent="body/battery"]
+show_behind_parent = true
+position = Vector2( 0.527054, -16.8653 )
+texture = ExtResource( 16 )
+
 [node name="display" type="Sprite" parent="body"]
 editor/display_folded = true
 position = Vector2( 3.12238, -38.0177 )
-texture = ExtResource( 14 )
+texture = ExtResource( 17 )
 
 [node name="bit" type="Sprite" parent="body/display"]
-texture = ExtResource( 15 )
-
-[node name="PRE" type="Sprite" parent="body"]
-position = Vector2( -83.6107, 55.4298 )
-texture = ExtResource( 16 )
-
-[node name="CLR" type="Sprite" parent="body"]
-position = Vector2( 92.8679, 54.6682 )
-texture = ExtResource( 17 )
+texture = ExtResource( 18 )
 
 [node name="PRE_button" type="Sprite" parent="body"]
 position = Vector2( -83.2627, 94.3984 )
-texture = ExtResource( 18 )
+texture = ExtResource( 19 )
+
+[node name="PRE" type="Sprite" parent="body"]
+position = Vector2( -88.3773, 93.9596 )
+texture = ExtResource( 20 )
 
 [node name="CLR_button" type="Sprite" parent="body"]
 position = Vector2( 93.5825, 95.1443 )
-texture = ExtResource( 18 )
+texture = ExtResource( 19 )
 flip_h = true
+
+[node name="CLR" type="Sprite" parent="body"]
+position = Vector2( 98.4289, 94.7868 )
+texture = ExtResource( 21 )
 
 [node name="turnarrow" type="Sprite" parent="body"]
 position = Vector2( -287.1, -334.274 )
 rotation = -0.8533
 scale = Vector2( 1.02123, 1.09956 )
-texture = ExtResource( 19 )
+texture = ExtResource( 22 )
 
 [node name="aliveAnim" type="AnimationPlayer" parent="."]
 autoplay = "alive"

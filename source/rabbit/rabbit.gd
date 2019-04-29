@@ -126,10 +126,10 @@ func _process(delta):
 
 func _unhandled_input(event):
 	if is_my_turn and not is_enemy and Crosshair.visible:
-		if event.is_action_pressed("ui_left"):			
+		if event.is_action_pressed("ui_down"):			
 			if current_attack_target_index > 0:
 				current_attack_target_index -= 1
-		if event.is_action_pressed("ui_right"):			
+		if event.is_action_pressed("ui_up"):			
 			if current_attack_target_index < attack_targets.size() - 1:
 				current_attack_target_index += 1
 		if event.is_action_pressed("ui_select"):
