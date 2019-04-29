@@ -7,7 +7,7 @@ var mode = 0
 var target_positions = []
 
 func _ready():
-	set_mode(0)
+	set_mode(1)
 
 func set_mode(bit):
 	mode = bit	
@@ -22,10 +22,10 @@ func _on_bit_requested(j):
 	
 	randomize()
 	
-	if rand_range(0, 1) > 0.5:
-		set_mode(0)
-	else:
-		set_mode(1)
+#	if rand_range(0, 1) > 0.5:
+#		set_mode(0)
+#	else:
+#		set_mode(1)
 	
 	var bit = bitScn.instance()
 	get_parent().add_child(bit)

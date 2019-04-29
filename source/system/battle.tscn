@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ui/BattleUI.tscn" type="PackedScene" id=1]
+[ext_resource path="res://system/turn.tscn" type="PackedScene" id=2]
+[ext_resource path="res://rabbit/rabbit.tscn" type="PackedScene" id=3]
+
+[node name="Battle" type="Node2D"]
+position = Vector2( 30, -20 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+editor/display_folded = true
+
+[node name="BattleUI" parent="UI" instance=ExtResource( 1 )]
+margin_left = 830.066
+margin_top = 805.761
+margin_right = 1130.07
+margin_bottom = 931.761
+
+[node name="Turn" parent="." instance=ExtResource( 2 )]
+position = Vector2( 487.329, 287.604 )
+
+[node name="Rabbit" parent="." instance=ExtResource( 3 )]
+position = Vector2( 615.837, 1129.9 )
+
+[node name="RabbitEnemy" parent="." instance=ExtResource( 3 )]
+position = Vector2( 2297.85, 533.84 )
+is_enemy = true
+

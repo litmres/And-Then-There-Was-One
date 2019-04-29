@@ -24,19 +24,21 @@ func _input(event):
 func _on_Timer_timeout():
 	for rabbit in rabbits:		
 		if rabbits.find(rabbit) == turn:
-			rabbit.is_my_turn = true		
+			rabbit.is_my_turn = true
+#			rabbit.can_get_bit = false
 		else:
 			rabbit.is_my_turn = false			
+#			rabbit.can_get_bit = true
 
 func end_turn():
+	rabbits[turn].can_get_bit = true
 	turn += 1
 	if turn == rabbits.size():
 		turn = 0
 		for rabbit in rabbits:
 			rabbit.has_j = false
 			rabbit.has_k = false
-			rabbit.is_my_turn = false			
-			rabbit.can_get_bit = false
-	rabbits[turn].can_get_bit = true
+			rabbit.is_my_turn = false
+#			rabbit.can_get_bit = false
 	
 	is_on_clock_edge = false
