@@ -1,6 +1,6 @@
-extends Node2D
+extends Area2D
 
-var speed = 2100
+var speed = 1800
 var target = Vector2()
 var done_moving = false
 

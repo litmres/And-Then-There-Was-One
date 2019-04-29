@@ -47,6 +47,8 @@ onready var display_sprite = $body/display/bit
 onready var J_position = $body/head/earl/J.global_position
 onready var K_position = $body/head/earr/K.global_position
 
+onready var weapon = $body/armr/weapon
+
 var turnAnim
 
 var attack_targets = []
@@ -131,23 +133,26 @@ func _unhandled_input(event):
 				Crosshair.hide()
 
 func shoot(target):	
+	$attackAnim.play("attack")
+	yield($attackAnim, "animation_finished")
+	
 	var bit = send_q(target)	
 	
 	var spark = SparkScn.instance()
 	get_parent().add_child(spark)
-	spark.global_position = global_position
+	spark.global_position = weapon.global_position - Vector2(-20, 400)
 	spark.target = target
 	
 	var spark2 = SparkScn.instance()
 #	spark2.speed = spark.speed - 200
 	get_parent().add_child(spark2)
-	spark2.global_position = global_position 
+	spark2.global_position = weapon.global_position - Vector2(-20, 400)
 	spark2.target = target
 	
 	var spark3 = SparkScn.instance()
 #	spark3.speed = spark2.speed - 200
 	get_parent().add_child(spark3)
-	spark3.global_position = global_position
+	spark3.global_position = weapon.global_position - Vector2(-20, 400)
 	spark3.target = target
 
 	if not bit.is_connected("area_entered", Turn, "end_turn"):
@@ -236,7 +241,7 @@ func receive_jk(bit):
 	if not has_k:
 		k = 0
 	if is_alive and is_my_turn:
-		$aliveAnim.playback_speed = rand_range(0.2, 0.7)
+		$aliveAnim.playback_speed = rand_range(0.5, 1.0)
 		$aliveAnim.stop()
 		$aliveAnim.play("alive")	
 	yield(Clock, "tick")
@@ -279,3 +284,11 @@ func send_q(target):
 	bit.set_bit(q)
 	bit.target = target
 	return bit
+
+func _on_J_area_entered(area):
+	if area.name.find("Spark") > -1:
+		$shockedAnim.play("shocked")
+
+func _on_K_area_entered(area):
+	if area.name.find("Spark") > -1:
+		$shockedAnim.play("shocked")

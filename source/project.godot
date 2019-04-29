@@ -30,5 +30,5 @@ window/stretch/aspect="keep"
 
 [rendering]
 
-environment/default_clear_color=Color( 0.0509804, 0.262745, 0.0196078, 1 )
+environment/default_clear_color=Color( 0.027451, 0.203922, 0, 1 )
 environment/default_environment="res://default_env.tres"
