@@ -21,6 +21,8 @@ func set_mode(bit):
 func _on_bit_requested(target):
 	$bitAnim.play("bit")
 	
+	
+	
 	randomize()
 	
 	var bit = BitScn.instance()
@@ -47,3 +49,5 @@ func _on_bit_requested(target):
 	spark3.global_position = global_position
 	spark3.target = target
 	
+func resume_idle_anim():
+	$bitAnim.play("idle")

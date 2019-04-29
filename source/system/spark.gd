@@ -15,9 +15,10 @@ func _process(delta):
 	move_to(target, delta)			
 	
 func move_to(pos, delta):
-	if global_position.distance_to(pos) > 20:
+	if global_position.distance_to(pos) > 50:
 		var dir = pos - global_position
 		global_position += dir.normalized() * speed * delta		
 	else:		
 		done_moving = true
-		queue_free()
+		if $sparkAnim.current_animation != "spark out":
+			$sparkAnim.play("spark out")
