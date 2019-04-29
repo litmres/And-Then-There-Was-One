@@ -2,9 +2,9 @@
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://system/clock.tscn" type="PackedScene" id=2]
-[ext_resource path="res://ui/BattleUI.tscn" type="PackedScene" id=3]
-[ext_resource path="res://system/turn.tscn" type="PackedScene" id=4]
-[ext_resource path="res://system/powersource.tscn" type="PackedScene" id=5]
+[ext_resource path="res://system/powersource.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/BattleUI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://system/turn.tscn" type="PackedScene" id=5]
 [ext_resource path="res://rabbit/rabbit.tscn" type="PackedScene" id=6]
 
 [node name="Game" type="Node2D"]
@@ -17,26 +17,26 @@ zoom = Vector2( 1.5, 1.5 )
 
 [node name="Clock" parent="." instance=ExtResource( 2 )]
 
-[node name="UI" type="CanvasLayer" parent="."]
-
-[node name="BattleUI" parent="UI" instance=ExtResource( 3 )]
-margin_left = 1164.81
-margin_top = 864.487
-margin_right = 1364.81
-margin_bottom = 990.487
-
-[node name="InBattle" type="Node2D" parent="."]
-
-[node name="Turn" parent="InBattle" instance=ExtResource( 4 )]
-position = Vector2( 487.329, 287.604 )
-
-[node name="PowerSource" parent="InBattle" instance=ExtResource( 5 )]
+[node name="PowerSource" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1470.57, 820.638 )
 
-[node name="Rabbit" parent="InBattle" instance=ExtResource( 6 )]
+[node name="Battle" type="Node2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="Battle"]
+
+[node name="BattleUI" parent="Battle/UI" instance=ExtResource( 4 )]
+margin_left = 830.066
+margin_top = 805.761
+margin_right = 1130.07
+margin_bottom = 931.761
+
+[node name="Turn" parent="Battle" instance=ExtResource( 5 )]
+position = Vector2( 487.329, 287.604 )
+
+[node name="Rabbit" parent="Battle" instance=ExtResource( 6 )]
 position = Vector2( 615.837, 1129.9 )
 
-[node name="Rabbit2" parent="InBattle" instance=ExtResource( 6 )]
+[node name="RabbitEnemy" parent="Battle" instance=ExtResource( 6 )]
 position = Vector2( 2297.85, 533.84 )
 is_enemy = true
 

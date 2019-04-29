@@ -29,7 +29,7 @@ var q = 1
 
 onready var Turn = get_parent().get_node("Turn")
 onready var Clock = get_parent().get_parent().get_node("Clock")
-onready var PowerSource = get_parent().get_node("PowerSource")
+onready var PowerSource = get_parent().get_parent().get_node("PowerSource")
 
 onready var J_sprite = $body/head/earl/J2
 onready var K_sprite = $body/head/earr/K2
@@ -80,6 +80,7 @@ func _process(delta):
 		J_sprite.texture = null
 	if not has_k:
 		K_sprite.texture = null	
+		
 	if is_alive:
 		if is_my_turn:
 			if not turnAnim.is_playing():			
@@ -135,8 +136,7 @@ func tick():
 func dead():
 	has_j = false
 	has_k = false
-	J_sprite.texture = null
-	K_sprite.texture = null
+
 	$aliveAnim.stop()
 	$deadAnim.play("dead")
 	disconnect_clock(Clock)
