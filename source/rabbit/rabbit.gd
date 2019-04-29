@@ -94,10 +94,14 @@ func _ready():
 			
 func clear_bits_if_no_j_or_k():
 	if not has_j:
-		J_sprite.texture = null
+		J_sprite.modulate = Color("986767")
+	else:
+		J_sprite.modulate = Color("ffffff")
 	if not has_k:
-		K_sprite.texture = null	
-
+		K_sprite.modulate = Color("986767")
+	else:
+		K_sprite.modulate = Color("ffffff")
+		
 func _process(delta):			
 	clear_bits_if_no_j_or_k()
 	
@@ -112,6 +116,7 @@ func _process(delta):
 			
 			if attack_targets.size() > current_attack_target_index and Crosshair.visible:
 				Crosshair.global_position = attack_targets[current_attack_target_index]
+			
 		else:		
 			turnAnim.stop()
 			$body.modulate = Color(color)
@@ -292,3 +297,14 @@ func _on_J_area_entered(area):
 func _on_K_area_entered(area):
 	if area.name.find("Spark") > -1:
 		$shockedAnim.play("shocked")
+
+func _on_AITimer_timeout():
+	if is_enemy and Crosshair.visible:
+		if current_attack_target_index < attack_targets.size():
+			shoot(attack_targets[current_attack_target_index])
+			Crosshair.hide()
+
+func _on_AISelectTargetTimer_timeout():
+	if is_enemy and Crosshair.visible:
+		if attack_targets.size() > 0:
+			current_attack_target_index = randi() % attack_targets.size()

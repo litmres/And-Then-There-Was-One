@@ -1150,5 +1150,15 @@ anims/modulate = SubResource( 6 )
 [node name="deadAnim" type="AnimationPlayer" parent="."]
 anims/dead = SubResource( 7 )
 
+[node name="AITimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 3.0
+autostart = true
+
+[node name="AISelectTargetTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="area_entered" from="body/head/earl/J/J" to="." method="_on_J_area_entered"]
 [connection signal="area_entered" from="body/head/earr/K/K" to="." method="_on_K_area_entered"]
+[connection signal="timeout" from="AITimer" to="." method="_on_AITimer_timeout"]
+[connection signal="timeout" from="AISelectTargetTimer" to="." method="_on_AISelectTargetTimer_timeout"]

@@ -21,8 +21,6 @@ func set_mode(bit):
 func _on_bit_requested(target):
 	$bitAnim.play("bit")
 	
-	
-	
 	randomize()
 	
 	var bit = BitScn.instance()
@@ -35,19 +33,29 @@ func _on_bit_requested(target):
 	var spark = SparkScn.instance()
 	get_parent().add_child(spark)
 	spark.global_position = global_position
+	spark.scale *= 0.3
 	spark.target = target
 	
 	var spark2 = SparkScn.instance()
 #	spark2.speed = spark.speed - 200
 	get_parent().add_child(spark2)
 	spark2.global_position = global_position 
+	spark2.scale *= 0.3
 	spark2.target = target
 	
 	var spark3 = SparkScn.instance()
 #	spark3.speed = spark2.speed - 200
 	get_parent().add_child(spark3)
 	spark3.global_position = global_position
+	spark3.scale *= 0.3
 	spark3.target = target
 	
 func resume_idle_anim():
 	$bitAnim.play("idle")
+
+func _on_PowerSource_area_entered(area):
+	if area.name.find("Bit") > -1:
+		set_mode(area.bit)
+
+func _on_RestTo1Timer_timeout():
+	set_mode(1)

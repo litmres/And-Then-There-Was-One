@@ -123,3 +123,10 @@ autoplay = "idle"
 anims/bit = SubResource( 2 )
 anims/idle = SubResource( 3 )
 
+[node name="RestTo1Timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 7.0
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="_on_PowerSource_area_entered"]
+[connection signal="timeout" from="RestTo1Timer" to="." method="_on_RestTo1Timer_timeout"]
