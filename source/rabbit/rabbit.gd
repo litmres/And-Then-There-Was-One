@@ -349,11 +349,11 @@ func receive_jk(bit):
 		$aliveAnim.playback_speed = rand_range(0.5, 1.0)
 		$aliveAnim.stop()
 		$aliveAnim.play("alive")
+	yield(Clock, "tick")
 	if foe != null:
 		foe.Crosshair.show()
 		if foe.is_enemy:
 			foe.Crosshair.modulate = Color("66ff07")
-	yield(Clock, "tick")
 
 func receive_pre_clr(bit):
 	if pre_bar == 0 and clr_bar == 0:
