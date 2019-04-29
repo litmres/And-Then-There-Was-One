@@ -115,18 +115,17 @@ func tick():
 			$aliveAnim.stop()
 			$aliveAnim.play("alive")
 	else:
-		dead()
-		
-	if has_j and has_k:
-		if j == 1 and k == 1:
-			if q == 0:
-				set_q(1)
-			elif q == 1:
-				set_q(0)
-		elif j == 1 and k == 0:
+		dead()		
+	
+	if j == 1 and k == 1:
+		if q == 0:
 			set_q(1)
-		elif j == 0 and k == 1 :
+		elif q == 1:
 			set_q(0)
+	elif j == 1 and k == 0:
+		set_q(1)
+	elif j == 0 and k == 1 :
+		set_q(0)
 
 func dead():
 	has_j = false

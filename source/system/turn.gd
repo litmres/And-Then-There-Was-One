@@ -6,6 +6,11 @@ var turn = 0
 
 var is_on_clock_edge = false
 
+onready var Clock = get_parent().get_parent().get_node("Clock")
+
+func _ready():
+	connect_clock(Clock)
+
 func connect_clock(clock):
 	if not clock.is_connected("tick", self, "_on_Clock_ticked"):
 		clock.connect("tick", self, "_on_Clock_ticked")
@@ -17,11 +22,11 @@ func disconnect_clock(clock):
 func _on_Clock_ticked():
 	is_on_clock_edge = true
 
-func _input(event):	
+func _unhandled_input(event):	
 	if event.is_action_pressed("ui_select"):
 		end_turn()
 
-func _on_Timer_timeout():
+func _on_Timer_timeout():	
 	for rabbit in rabbits:		
 		if rabbits.find(rabbit) == turn:
 			rabbit.is_my_turn = true
@@ -31,6 +36,7 @@ func _on_Timer_timeout():
 #			rabbit.can_get_bit = true
 
 func end_turn():
+	yield(Clock, "tick")
 	rabbits[turn].can_get_bit = true
 	turn += 1
 	if turn == rabbits.size():

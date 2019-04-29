@@ -73,6 +73,7 @@ func _ready():
 	display_sprite.texture = BitsSpr[q]
 	
 	Turn.rabbits.append(self)
+	
 	$aliveAnim.playback_speed = rand_range(0.08, 0.1)
 
 func _process(delta):
@@ -121,17 +122,16 @@ func tick():
 			$aliveAnim.play("alive")
 	else:
 		dead()
-		
-	if has_j and has_k:
-		if j == 1 and k == 1:
-			if q == 0:
-				set_q(1)
-			elif q == 1:
-				set_q(0)
-		elif j == 1 and k == 0:
+
+	if j == 1 and k == 1:
+		if q == 0:
 			set_q(1)
-		elif j == 0 and k == 1 :
+		elif q == 1:
 			set_q(0)
+	elif j == 1 and k == 0:
+		set_q(1)
+	elif j == 0 and k == 1 :
+		set_q(0)
 
 func dead():
 	has_j = false
@@ -149,6 +149,10 @@ func disconnect_source(source):
 		disconnect("bit_requested", source, "_on_bit_requested")
 
 func receive_jk(bit):
+	if not has_j:
+		j = 0
+	if not has_k:
+		k = 0
 	if is_alive and is_my_turn:
 		$aliveAnim.playback_speed = rand_range(0.2, 0.7)
 		$aliveAnim.stop()
