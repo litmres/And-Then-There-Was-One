@@ -14,8 +14,8 @@ var recipient
 
 onready var Sprite = $Sprite
 
-func _ready():
-	set_bit(0)
+func _ready():	
+	set_bit(0)	
 
 func set_bit(value):
 	bit = value
@@ -35,9 +35,9 @@ func move_to(pos, delta):
 	if global_position.distance_to(pos) > 10:
 		var dir = pos - global_position
 		global_position += dir.normalized() * speed * delta		
-	else:
+	else:		
 		done_moving = true
-		queue_free()
+		call_deferred("queue_free")
 
 func _on_Bit_area_entered(area):
 	recipient = area.name

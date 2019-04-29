@@ -4,7 +4,9 @@ signal bit_requested(j)
 
 var BitsSpr = [preload("res://bit/sprites/0.PNG"),
 				preload("res://bit/sprites/1.PNG")]
-				
+
+var BitScn = preload("res://bit/bit.tscn")
+
 var CrosshairScn = preload("res://system/crosshair.tscn")
 
 var DepressedSpr = preload("res://rabbit/sprites/depressed.PNG")
@@ -87,7 +89,6 @@ func _ready():
 		add_child(Crosshair)
 		Crosshair.hide()
 			
-
 func clear_bits_if_no_j_or_k():
 	if not has_j:
 		J_sprite.texture = null
@@ -106,7 +107,7 @@ func _process(delta):
 				turnAnim.play("modulate")
 			$body/turnarrow.show()
 			
-			if attack_targets.size() > current_attack_target_index:
+			if attack_targets.size() > current_attack_target_index and Crosshair.visible:
 				Crosshair.global_position = attack_targets[current_attack_target_index]
 		else:		
 			turnAnim.stop()
@@ -116,15 +117,23 @@ func _process(delta):
 		$body/turnarrow.hide()
 
 func _unhandled_input(event):
-	if is_my_turn and not is_enemy:
-		if event.is_action_pressed("ui_left"):
-			print(current_attack_target_index)
+	if is_my_turn and not is_enemy and Crosshair.visible:
+		if event.is_action_pressed("ui_left"):			
 			if current_attack_target_index > 0:
 				current_attack_target_index -= 1
-		if event.is_action_pressed("ui_right"):
-			print(current_attack_target_index)
+		if event.is_action_pressed("ui_right"):			
 			if current_attack_target_index < attack_targets.size() - 1:
 				current_attack_target_index += 1
+		if event.is_action_pressed("ui_select"):
+			if current_attack_target_index < attack_targets.size():
+				shoot(attack_targets[current_attack_target_index])
+				Crosshair.hide()
+
+func shoot(target):	
+	var bit = send_q(target)	
+
+	if not bit.is_connected("area_entered", Turn, "end_turn"):
+		bit.connect("area_entered", Turn, "end_turn")	
 
 func connect_clock(clock):
 	if not clock.is_connected("tick", self, "_on_Clock_ticked"):
@@ -167,12 +176,12 @@ func get_foe():
 func get_foe_targets():
 	if foe != null:
 		var targets = []
+		targets.append(PowerSource.global_position)	
 		if not foe.has_j:
 			targets.append(foe.J_position)
 		if not foe.has_k:
 			targets.append(foe.K_position)
-		targets.append(PowerSource.global_position)	
-		attack_targets = targets		
+		attack_targets = targets
 
 func dead():
 	has_j = false
@@ -244,5 +253,9 @@ func set_q(bit):
 	q = bit
 	display_sprite.texture = BitsSpr[q]
 
-func send_q():
-	return q
+func send_q(target):
+	var bit = BitScn.instance()
+	add_child(bit)
+	bit.set_bit(q)
+	bit.target = target
+	return bit

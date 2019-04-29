@@ -1,6 +1,6 @@
 extends Area2D
 
-var bitScn = preload("res://bit/bit.tscn")
+var BitScn = preload("res://bit/bit.tscn")
 
 var mode = 0
 
@@ -17,19 +17,14 @@ func set_mode(bit):
 	else:
 		$Sprite/SwitchSprite.position.y = 29.829
 
-func _on_bit_requested(j):
+func _on_bit_requested(target):
 	$bitAnim.play("bit")
 	
 	randomize()
 	
-#	if rand_range(0, 1) > 0.5:
-#		set_mode(0)
-#	else:
-#		set_mode(1)
-	
-	var bit = bitScn.instance()
+	var bit = BitScn.instance()
 	get_parent().add_child(bit)
 	bit.position = position
 	bit.set_bit(mode)
-	bit.target = j
+	bit.target = target
 	

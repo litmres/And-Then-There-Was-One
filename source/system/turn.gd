@@ -21,8 +21,8 @@ func _on_Clock_ticked():
 	pass
 
 func _unhandled_input(event):	
-	if event.is_action_pressed("ui_select"):
-		end_turn()
+	if event.is_action_pressed("ui_page_down"):
+		end_turn("")
 
 func _on_Timer_timeout():	
 	for rabbit in rabbits:		
@@ -31,7 +31,7 @@ func _on_Timer_timeout():
 		else:
 			rabbit.is_my_turn = false			
 
-func end_turn():
+func end_turn(area):	
 	rabbits[turn].can_get_bit = true
 	yield(Clock, "tick")
 	turn += 1
