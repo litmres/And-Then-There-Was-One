@@ -15,6 +15,7 @@ var PressedSpr = preload("res://rabbit/sprites/pressed.PNG")
 
 export var is_enemy = false
 var is_my_turn = false
+var is_game_over = false
 var is_alive = true
 var can_get_bit = true
 var battery_bits = 8
@@ -50,6 +51,13 @@ onready var K_position = $body/head/earr/K.global_position
 
 onready var weapon = $body/armr/weapon
 
+onready var keys = get_parent().get_node("UI/keys")
+onready var arrow_up = get_parent().get_node("UI/keys/arrow_up")
+onready var arrow_down = get_parent().get_node("UI/keys/arrow_down")
+onready var arrow_left = get_parent().get_node("UI/keys/arrow_left")
+onready var arrow_right = get_parent().get_node("UI/keys/arrow_right")
+onready var spacebar = get_parent().get_node("UI/keys/spacebar")
+
 var battery_levels
 
 var turnAnim
@@ -61,6 +69,7 @@ var Crosshair
 func reset():	
 	is_enemy = false
 	is_my_turn = false
+	is_game_over = false
 	is_alive = true
 	can_get_bit = true
 	battery_bits = 8
@@ -128,9 +137,30 @@ func consume_battery():
 			battery.show()
 
 func _process(delta):			
+	if get_parent().get_parent().has_game_started:
+		arrow_up.show()
+		arrow_down.show()
+		arrow_left.show()
+		arrow_right.show()
+	else:
+		arrow_up.hide()
+		arrow_down.hide()
+		arrow_left.hide()
+		arrow_right.hide()
+	
+	if get_parent().get_parent().is_game_over:
+		arrow_up.hide()
+		arrow_down.hide()
+		arrow_left.hide()
+		arrow_right.hide()
+	
+	if battery_bits <= 0:
+		is_alive = false
+		set_q(0)
+	
 	clear_bits_if_no_j_or_k()
 	
-	if not is_my_turn:
+	if not is_my_turn or is_game_over:
 		Crosshair.hide()
 		
 	if pre_bar == 0:
@@ -143,7 +173,7 @@ func _process(delta):
 	elif clr_bar == 1:
 		CLR_button_sprite.texture = DepressedSpr
 	
-	if is_alive:
+	if is_alive and get_parent().get_parent().has_game_started:
 		if is_my_turn:
 			if not turnAnim.is_playing():			
 				turnAnim.play("modulate")
@@ -160,25 +190,44 @@ func _process(delta):
 		$body/turnarrow.hide()
 
 func _unhandled_input(event):	
-	if is_my_turn and not is_enemy:
-		if event.is_action_pressed("ui_left"):
-			press_pre_bar()
-		elif event.is_action_pressed("ui_right"):
-			press_clr_bar()		
+	if event.is_action_released("ui_select"):	
+		spacebar.modulate = Color("ffffff")
+	if event.is_action_pressed("ui_select"):
+		spacebar.modulate = Color("610054")
+	if not is_game_over and get_parent().get_parent().has_game_started:
+		if event.is_action_released("ui_left"):
+			arrow_left.modulate = Color("ffffff")
+		if event.is_action_released("ui_right"):
+			arrow_right.modulate = Color("ffffff")
+		if event.is_action_released("ui_up"):	
+			arrow_up.modulate = Color("ffffff")
+		if event.is_action_released("ui_down"):	
+			arrow_down.modulate = Color("ffffff")			
+		if is_my_turn and not is_enemy:
+			if event.is_action_pressed("ui_left"):
+				press_pre_bar()
+				arrow_left.modulate = Color("610054")
+			elif event.is_action_pressed("ui_right"):
+				press_clr_bar()
+				arrow_right.modulate = Color("610054")
+				
+		if is_my_turn and not is_enemy and Crosshair.visible:		
+			if event.is_action_pressed("ui_down"):			
+				arrow_down.modulate = Color("610054")
+				if current_attack_target_index > 0:
+					current_attack_target_index -= 1
+			if event.is_action_pressed("ui_up"):			
+				arrow_up.modulate = Color("610054")
+				if current_attack_target_index < attack_targets.size() - 1:
+					current_attack_target_index += 1
+				
+			if event.is_action_pressed("ui_select"):
+				spacebar.modulate = Color("610054")
+				if current_attack_target_index < attack_targets.size():
+					shoot(attack_targets[current_attack_target_index])
+					Crosshair.hide()
 			
-	if is_my_turn and not is_enemy and Crosshair.visible:		
-		if event.is_action_pressed("ui_down"):			
-			if current_attack_target_index > 0:
-				current_attack_target_index -= 1
-		if event.is_action_pressed("ui_up"):			
-			if current_attack_target_index < attack_targets.size() - 1:
-				current_attack_target_index += 1
-			
-		if event.is_action_pressed("ui_select"):
-			if current_attack_target_index < attack_targets.size():
-				shoot(attack_targets[current_attack_target_index])
-				Crosshair.hide()
-
+		
 func shoot(target):	
 	$attackAnim.play("attack")
 	yield($attackAnim, "animation_finished")
@@ -258,8 +307,16 @@ func dead():
 	has_j = false
 	has_k = false
 	$aliveAnim.stop()
-	$deadAnim.play("dead")
+	$displayAnim.stop()
+	$tickAnim.stop()
+	$turnAnim.stop()
 	disconnect_clock(Clock)
+	is_my_turn = false
+	is_alive = false
+	is_game_over = true
+	if not $deadAnim.is_playing():
+		$deadAnim.play("dead")
+	get_parent().get_parent().game_over_lost()
 
 func connect_source(source):
 	if not is_connected("bit_requested", source, "_on_bit_requested"):
@@ -314,8 +371,8 @@ func receive_pre_clr(bit):
 		has_j = true
 		has_k = true
 		
-	can_get_bit = true
-	is_my_turn = true
+#	can_get_bit = true
+#	is_my_turn = true
 					
 	compute_flipflop()	
 		
@@ -336,15 +393,16 @@ func receive_clr_bar(bit):
 	receive_pre_clr(clr_bar)
 
 func compute_flipflop():
-	if j == 1 and k == 1:
-		if q == 0:
+	if not is_game_over:
+		if j == 1 and k == 1:
+			if q == 0:
+				set_q(1)
+			elif q == 1:
+				set_q(0)
+		elif j == 1 and k == 0:
 			set_q(1)
-		elif q == 1:
+		elif j == 0 and k == 1 :
 			set_q(0)
-	elif j == 1 and k == 0:
-		set_q(1)
-	elif j == 0 and k == 1 :
-		set_q(0)
 
 func set_q(bit):
 	q = bit

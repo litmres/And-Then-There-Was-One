@@ -1,10 +1,50 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://system/bitpower.gd" type="Script" id=1]
 [ext_resource path="res://system/sprites/powerbit.PNG" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 28.5032
+
+[sub_resource type="Animation" id=2]
+resource_name = "New Anim"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0, 0 ), Vector2( -3.59241, -0.59874 ), Vector2( -12.5735, -0.59874 ), Vector2( -8.78146, 0.731793 ), Vector2( 5.30309, -3.3073 ), Vector2( 6.50057, -5.10351 ), Vector2( 0.741303, 1.38756 ), Vector2( 0.741303, 4.38123 ), Vector2( -0.228073, -1.70116 ), Vector2( -0.228073, -1.70116 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, -12.1517, 14.7896, 10.547, 0.0, 13.243, 0.0, -6.62171, 0.0, 6.65389, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0.5, 0.5 ), Vector2( 0.46692, 0.475638 ), Vector2( 0.5, 0.5 ), Vector2( 0.480689, 0.596703 ), Vector2( 0.521062, 0.413302 ), Vector2( 0.5, 0.5 ), Vector2( 0.5, 0.326076 ), Vector2( 0.5, 0.5 ), Vector2( 0.420957, 0.480928 ), Vector2( 0.5, 0.5 ), Vector2( 0.5, 0.5 ) ]
+}
 
 [node name="BPow" type="Area2D"]
 collision_layer = 64
@@ -15,8 +55,13 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.5, 0.5 )
+position = Vector2( -0.228073, -1.70116 )
+scale = Vector2( 0.420957, 0.480928 )
 z_index = -1
 texture = ExtResource( 2 )
+
+[node name="bpowAnim" type="AnimationPlayer" parent="."]
+autoplay = "New Anim"
+"anims/New Anim" = SubResource( 2 )
 
 [connection signal="area_exited" from="." to="." method="_on_BPow_area_exited"]

@@ -1,13 +1,39 @@
 extends Node2D
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+var LostSpr = preload("res://ui/sprites/LOST.PNG")
+var TiedSpr = preload("res://ui/sprites/TIED.PNG")
+var WonSpr = preload("res://ui/sprites/WON.PNG")
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+var has_game_started = false
+var is_game_over = false
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_select"):
+		if not has_game_started:
+			has_game_started = true
+			$CanvasModulate.hide()
+			$UI/Logo.hide()
+		if is_game_over:
+			get_tree().reload_current_scene()	
+			is_game_over = false
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().reload_current_scene()	
+	
+func game_over_tied():
+	show_game_over_screen()
+	$UI/GameOverTexture.texture = TiedSpr
+	pass
+	
+func game_over_won():
+	show_game_over_screen()
+	$UI/GameOverTexture.texture = WonSpr
+	pass	
+
+func game_over_lost():
+	show_game_over_screen()
+	$UI/GameOverTexture.texture = LostSpr
+	pass
+	
+func show_game_over_screen():
+	is_game_over = true
+	$CanvasModulate.show()

@@ -7,10 +7,13 @@ var BitScn = preload("res://bit/bit.tscn")
 
 var BitPowerScn = preload("res://system/bitpower.tscn")
 
-var bit_count = 2
+var bit_count = 16
 var mode = 0
 
 var target_positions = []
+
+onready var Rabbit = get_parent().get_node("Battle/Rabbit")
+onready var RabbitEnemy = get_parent().get_node("Battle/RabbitEnemy")
 
 func _ready():
 	set_mode(1)
@@ -81,7 +84,28 @@ func _on_bit_requested(target):
 	
 	else: 
 		$bitAnim.stop()
-	
+		
+		Rabbit.is_my_turn = false
+		Rabbit.is_game_over = true
+		RabbitEnemy.is_my_turn = false
+		RabbitEnemy.is_game_over = true
+		
+		Rabbit.Turn.disconnect_clock(Rabbit.Clock)
+		RabbitEnemy.Turn.disconnect_clock(RabbitEnemy.Clock)
+		
+		if Rabbit.battery_bits > 0:
+			if Rabbit.q == RabbitEnemy.q:
+				get_parent().game_over_tied()
+			elif Rabbit.q > RabbitEnemy.q:
+				RabbitEnemy.dead()
+				get_parent().game_over_won()
+			else: 
+				Rabbit.dead()
+				get_parent().game_over_lost()
+		else:
+			Rabbit.dead()
+			get_parent().game_over_lost()
+
 func resume_idle_anim():
 	$bitAnim.play("idle")
 

@@ -1051,24 +1051,25 @@ tracks/3/keys = {
 }
 
 [node name="Rabbit" type="Node2D"]
+editor/display_folded = true
 script = ExtResource( 1 )
 
 [node name="body" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( -4.02148, 126.512 )
 texture = ExtResource( 2 )
 
 [node name="head" type="Sprite" parent="body"]
-editor/display_folded = true
 position = Vector2( 0.830444, -213.513 )
 texture = ExtResource( 3 )
 
 [node name="earl" type="Sprite" parent="body/head"]
+editor/display_folded = true
 position = Vector2( -67.8574, -80.1738 )
 texture = ExtResource( 4 )
 offset = Vector2( -27.7567, -60.1466 )
 
 [node name="J" type="Sprite" parent="body/head/earl"]
+editor/display_folded = true
 position = Vector2( -38.2383, -97.1233 )
 rotation = -0.400913
 texture = ExtResource( 5 )
@@ -1087,11 +1088,13 @@ position = Vector2( -8.95917, -31.2068 )
 rotation = -0.400913
 
 [node name="earr" type="Sprite" parent="body/head"]
+editor/display_folded = true
 position = Vector2( 67.6079, -83.6033 )
 texture = ExtResource( 6 )
 offset = Vector2( 31.9632, -60.1466 )
 
 [node name="K" type="Sprite" parent="body/head/earr"]
+editor/display_folded = true
 position = Vector2( 49.7505, -99.86 )
 rotation = 0.337065
 texture = ExtResource( 7 )

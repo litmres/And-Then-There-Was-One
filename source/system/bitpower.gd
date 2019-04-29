@@ -6,7 +6,9 @@ extends Area2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	randomize()
+	$bpowAnim.playback_speed = rand_range(0.7, 2.1)
+	$bpowAnim.play()
 
 func _on_PowerSource_bit_consumed():
 	global_position -= Vector2(0, 64)

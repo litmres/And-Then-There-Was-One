@@ -11,4 +11,5 @@ func _ready():
 	pass
 	
 func _on_Timer_timeout():
-	emit_signal("tick")
+	if get_parent().has_game_started:
+		emit_signal("tick")

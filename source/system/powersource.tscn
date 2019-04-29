@@ -113,7 +113,6 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-editor/display_folded = true
 texture = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true

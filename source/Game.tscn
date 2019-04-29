@@ -1,22 +1,146 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
-[ext_resource path="res://system/clock.tscn" type="PackedScene" id=2]
-[ext_resource path="res://system/powersource.tscn" type="PackedScene" id=3]
-[ext_resource path="res://system/battle.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/sprites/Logo.PNG" type="Texture" id=2]
+[ext_resource path="res://ui/sprites/LD44.PNG" type="Texture" id=3]
+[ext_resource path="res://ui/sprites/oneseedfruit.PNG" type="Texture" id=4]
+[ext_resource path="res://system/clock.tscn" type="PackedScene" id=5]
+[ext_resource path="res://system/powersource.tscn" type="PackedScene" id=6]
+[ext_resource path="res://system/battle.tscn" type="PackedScene" id=7]
+
+[sub_resource type="Animation" id=2]
+resource_name = "New Anim"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 1014.84, 463.568 ), Vector2( 998.568, 463.568 ), Vector2( 1011.58, 466.822 ), Vector2( 1001.82, 476.582 ), Vector2( 995.314, 479.836 ), Vector2( 998.568, 479.836 ), Vector2( 988.807, 479.836 ), Vector2( 988.807, 489.596 ), Vector2( 985.554, 486.343 ), Vector2( 1001.82, 483.089 ), Vector2( 1014.84, 463.568 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 0.765095, 0.765095 ), Vector2( 0.765095, 0.765095 ), Vector2( 0.765095, 0.765095 ), Vector2( 0.765095, 0.765095 ), Vector2( 0.765095, 0.765095 ), Vector2( 0.765095, 0.765095 ), Vector2( 0.765095, 0.765095 ), Vector2( 0.765095, 0.765095 ), Vector2( 0.765095, 0.765095 ), Vector2( 0.765095, 0.765095 ), Vector2( 0.765095, 0.765095 ) ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "New Anim"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5, 0.6, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 500.91, 121.433 ), Vector2( 407.938, 111.946 ), Vector2( 394.656, 110.048 ), Vector2( 408.096, 107.993 ), Vector2( 434.975, 103.882 ), Vector2( 430.959, 115.994 ), Vector2( 422.927, 140.217 ), Vector2( 422.073, 127.03 ), Vector2( 500.91, 121.433 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5, 0.6, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, -0.700861, 0.0, 0.460741, 0.0, 0.90266, 0.0, -2.01074, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_size")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5, 0.6, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 1024, 800 ), Vector2( 1024, 800 ), Vector2( 1024, 800 ), Vector2( 1024, 800 ), Vector2( 1024, 800 ), Vector2( 1024, 800 ), Vector2( 1024, 800 ), Vector2( 1024, 800 ), Vector2( 1024, 800 ) ]
+}
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color( 0.113725, 0.00784314, 0.0901961, 1 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Logo" type="Sprite" parent="UI"]
+position = Vector2( 1001.82, 483.089 )
+scale = Vector2( 0.765095, 0.765095 )
+texture = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/Logo"]
+autoplay = "New Anim"
+playback_speed = 0.5
+"anims/New Anim" = SubResource( 2 )
+
+[node name="LD44" type="Sprite" parent="UI/Logo"]
+position = Vector2( -304.653, 630.362 )
+texture = ExtResource( 3 )
+
+[node name="oneseedfruit" type="Sprite" parent="UI/Logo"]
+position = Vector2( 423.893, 630.763 )
+texture = ExtResource( 4 )
+
+[node name="GameOverTexture" type="TextureRect" parent="UI"]
+editor/display_folded = true
+margin_left = 500.91
+margin_top = 121.433
+margin_right = 1524.91
+margin_bottom = 921.433
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 1024, 800 )
+size_flags_horizontal = 15
+size_flags_vertical = 15
+expand = true
+
+[node name="GameOverAnim" type="AnimationPlayer" parent="UI/GameOverTexture"]
+autoplay = "New Anim"
+"anims/New Anim" = SubResource( 1 )
+
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
-zoom = Vector2( 1.5, 1.5 )
+zoom = Vector2( 1.2, 1.2 )
 
-[node name="Clock" parent="." instance=ExtResource( 2 )]
+[node name="Clock" parent="." instance=ExtResource( 5 )]
 
-[node name="PowerSource" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1470.57, 820.638 )
+[node name="PowerSource" parent="." instance=ExtResource( 6 )]
+position = Vector2( 1182.17, 703 )
 
-[node name="Battle" parent="." instance=ExtResource( 4 )]
+[node name="Battle" parent="." instance=ExtResource( 7 )]
+position = Vector2( -49.6899, -304.608 )
 
