@@ -5,6 +5,7 @@ signal bit_requested(j)
 var BitsSpr = [preload("res://bit/sprites/0.PNG"),
 				preload("res://bit/sprites/1.PNG")]
 
+var SparkScn = preload("res://system/spark.tscn")
 var BitScn = preload("res://bit/bit.tscn")
 
 var CrosshairScn = preload("res://system/crosshair.tscn")
@@ -131,6 +132,23 @@ func _unhandled_input(event):
 
 func shoot(target):	
 	var bit = send_q(target)	
+	
+	var spark = SparkScn.instance()
+	get_parent().add_child(spark)
+	spark.global_position = global_position
+	spark.target = target
+	
+	var spark2 = SparkScn.instance()
+#	spark2.speed = spark.speed - 200
+	get_parent().add_child(spark2)
+	spark2.global_position = global_position 
+	spark2.target = target
+	
+	var spark3 = SparkScn.instance()
+#	spark3.speed = spark2.speed - 200
+	get_parent().add_child(spark3)
+	spark3.global_position = global_position
+	spark3.target = target
 
 	if not bit.is_connected("area_entered", Turn, "end_turn"):
 		bit.connect("area_entered", Turn, "end_turn")	
@@ -256,6 +274,8 @@ func set_q(bit):
 func send_q(target):
 	var bit = BitScn.instance()
 	add_child(bit)
+	bit.global_position = Vector2(target.x, 
+								  target.y - 300)
 	bit.set_bit(q)
 	bit.target = target
 	return bit

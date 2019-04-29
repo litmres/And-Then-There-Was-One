@@ -5,7 +5,7 @@ var BitsSpr = [preload("res://bit/sprites/0.PNG"),
 
 var bit = 0
 
-var speed = 1200
+var speed = 500
 var target = Vector2()
 var done_moving = false
 

@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://system/spark.gd" type="Script" id=1]
+[ext_resource path="res://system/sprites/spark.PNG" type="Texture" id=2]
+
+[sub_resource type="Animation" id=2]
+resource_name = "spark"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( -10.5263, -6.31578 ), Vector2( 14.0351, -6.31579 ), Vector2( 0, 0 ), Vector2( -1.40352, -7.01754 ), Vector2( 0.701782, 11.2281 ), Vector2( 5.61401, 1.4035 ), Vector2( 2.10527, -14.0351 ), Vector2( 2.10527, 9.53674e-06 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 1.54436, 1.49466 ), Vector2( 1.42188, 1.1427 ), Vector2( 1, 1 ), Vector2( 0.708239, 0.699364 ), Vector2( 1.60203, 1.42046 ), Vector2( 0.886251, 0.839916 ), Vector2( 1.09402, 1.09427 ), Vector2( 1, 1 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.4, 0.6, 0.7, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 39.2734, 77.7693, -5.98397, 38.3009, 149.419, 208.776, 280.92, 217.644 ]
+}
+
+[node name="Spark" type="Node2D"]
+scale = Vector2( 1.5, 1.5 )
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 2.10527, 9.53674e-06 )
+rotation = 4.90297
+z_index = 41
+texture = ExtResource( 2 )
+
+[node name="sparkAnim" type="AnimationPlayer" parent="."]
+autoplay = "spark"
+playback_speed = 50.0
+anims/spark = SubResource( 2 )
+

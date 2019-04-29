@@ -625,7 +625,6 @@ tracks/18/keys = {
 script = ExtResource( 1 )
 
 [node name="body" type="Sprite" parent="."]
-editor/display_folded = true
 position = Vector2( -4.02148, 126.512 )
 texture = ExtResource( 2 )
 
