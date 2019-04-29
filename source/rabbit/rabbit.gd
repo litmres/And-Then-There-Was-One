@@ -17,6 +17,7 @@ export var is_enemy = false
 var is_my_turn = false
 var is_alive = true
 var can_get_bit = true
+var battery_bits = 8
 
 const ORI_COLOR = "ffffff"
 const ORI_ENEMY_COLOR = "daff03"
@@ -49,6 +50,8 @@ onready var K_position = $body/head/earr/K.global_position
 
 onready var weapon = $body/armr/weapon
 
+var battery_levels
+
 var turnAnim
 
 var attack_targets = []
@@ -60,6 +63,7 @@ func reset():
 	is_my_turn = false
 	is_alive = true
 	can_get_bit = true
+	battery_bits = 8
 	j = 0
 	k = 0
 	has_j = false
@@ -70,6 +74,17 @@ func reset():
 	_ready()
 
 func _ready():
+	battery_levels = [ 
+		$body/battery/level1,
+		$body/battery/level2,
+		$body/battery/level3,
+		$body/battery/level4,
+		$body/battery/level5,
+		$body/battery/level6,
+		$body/battery/level7,
+		$body/battery/level8	
+	]
+	
 	$body/turnarrow.hide()
 	
 	if is_enemy:
@@ -101,12 +116,32 @@ func clear_bits_if_no_j_or_k():
 		K_sprite.modulate = Color("986767")
 	else:
 		K_sprite.modulate = Color("ffffff")
+
+func consume_battery():
+	if battery_bits > 0:
+		battery_bits -= 1
 		
+		for battery in battery_levels:
+			if battery_levels.find(battery) == battery_bits:
+				battery.hide()
+				break
+			battery.show()
+
 func _process(delta):			
 	clear_bits_if_no_j_or_k()
 	
 	if not is_my_turn:
 		Crosshair.hide()
+		
+	if pre_bar == 0:
+		PRE_button_sprite.texture = PressedSpr
+	elif pre_bar == 1:
+		PRE_button_sprite.texture = DepressedSpr
+		
+	if clr_bar == 0:
+		CLR_button_sprite.texture = PressedSpr
+	elif clr_bar == 1:
+		CLR_button_sprite.texture = DepressedSpr
 	
 	if is_alive:
 		if is_my_turn:
@@ -124,14 +159,19 @@ func _process(delta):
 	else:
 		$body/turnarrow.hide()
 
-func _unhandled_input(event):
+func _unhandled_input(event):	
 	if is_my_turn and not is_enemy and Crosshair.visible:
+		if event.is_action_pressed("ui_left"):
+			press_pre_bar()
+		elif event.is_action_pressed("ui_right"):
+			press_clr_bar()		
 		if event.is_action_pressed("ui_down"):			
 			if current_attack_target_index > 0:
 				current_attack_target_index -= 1
 		if event.is_action_pressed("ui_up"):			
 			if current_attack_target_index < attack_targets.size() - 1:
 				current_attack_target_index += 1
+			
 		if event.is_action_pressed("ui_select"):
 			if current_attack_target_index < attack_targets.size():
 				shoot(attack_targets[current_attack_target_index])
@@ -256,18 +296,34 @@ func receive_jk(bit):
 	yield(Clock, "tick")
 
 func receive_pre_clr(bit):
-	if pre_bar == 0 and clr_bar == 1:
-		set_q(1)
-	if pre_bar == 1 and clr_bar == 0:
-		set_q(0)
+	if pre_bar == 0 and clr_bar == 0:
+		pre_bar = 1
+		clr_bar = 1
+		
+	elif battery_bits > 0:
+		consume_battery()
+		if pre_bar == 0 and clr_bar == 1:
+			set_q(1)
+		if pre_bar == 1 and clr_bar == 0:
+			set_q(0)
+		
+	print("PRE: " + str(pre_bar) + "; CLR: " + str(clr_bar))	
+
+func press_pre_bar():	
+	if pre_bar == 1:
+		receive_pre_bar(0)
+		
+func press_clr_bar():
+	if clr_bar == 1:
+		receive_clr_bar(0)
 
 func receive_pre_bar(bit):
 	pre_bar = bit
-	receive_pre_clr(bit)
+	receive_pre_clr(pre_bar)
 	
 func receive_clr_bar(bit):
 	clr_bar = bit
-	receive_pre_clr(bit)
+	receive_pre_clr(clr_bar)
 
 func compute_flipflop():
 	if j == 1 and k == 1:
@@ -311,3 +367,7 @@ func _on_AISelectTargetTimer_timeout():
 	if is_enemy and Crosshair.visible:
 		if attack_targets.size() > 0:
 			current_attack_target_index = randi() % attack_targets.size()
+
+func _on_RestorePRECLRTimer_timeout():	
+	pre_bar = 1
+	clr_bar = 1

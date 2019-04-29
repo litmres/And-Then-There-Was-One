@@ -1054,6 +1054,7 @@ tracks/3/keys = {
 script = ExtResource( 1 )
 
 [node name="body" type="Sprite" parent="."]
+editor/display_folded = true
 position = Vector2( -4.02148, 126.512 )
 texture = ExtResource( 2 )
 
@@ -1147,7 +1148,6 @@ texture = ExtResource( 13 )
 offset = Vector2( 1.14182, -211.03 )
 
 [node name="battery" type="Sprite" parent="body"]
-editor/display_folded = true
 position = Vector2( 2.86593, 38.8349 )
 texture = ExtResource( 14 )
 
@@ -1269,7 +1269,11 @@ autostart = true
 [node name="AISelectTargetTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="RestorePRECLRTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="area_entered" from="body/head/earl/J/J" to="." method="_on_J_area_entered"]
 [connection signal="area_entered" from="body/head/earr/K/K" to="." method="_on_K_area_entered"]
 [connection signal="timeout" from="AITimer" to="." method="_on_AITimer_timeout"]
 [connection signal="timeout" from="AISelectTargetTimer" to="." method="_on_AISelectTargetTimer_timeout"]
+[connection signal="timeout" from="RestorePRECLRTimer" to="." method="_on_RestorePRECLRTimer_timeout"]
