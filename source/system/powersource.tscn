@@ -102,7 +102,7 @@ tracks/2/keys = {
 }
 
 [node name="PowerSource" type="Area2D"]
-collision_layer = 65
+collision_layer = 97
 collision_mask = 65
 script = ExtResource( 1 )
 

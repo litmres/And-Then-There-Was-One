@@ -413,7 +413,7 @@ func send_q(target):
 	var bit = BitScn.instance()
 	add_child(bit)
 	bit.global_position = Vector2(target.x, 
-								  target.y - 300)
+								  target.y - 100)
 	bit.set_bit(q)
 	bit.target = target
 	return bit
